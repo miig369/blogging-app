@@ -75,10 +75,20 @@ const deleteArticleById = asyncHandler(async (req, res) => {
   }
 });
 
+const getArticlesByUser = asyncHandler(async (req, res) => {
+  const articles = await Article.find();
+  if (articles) {
+    res.status(200).json(articles);
+  } else {
+    res.status(404);
+    throw new Error('Article could not be found');
+  }
+});
 export {
   getArticles,
   getArticleById,
   addArticle,
   updateArticleById,
   deleteArticleById,
+  getArticlesByUser,
 };
