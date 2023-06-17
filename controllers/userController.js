@@ -7,6 +7,8 @@ const signUp = asyncHandler(async (req, res) => {
   // destructure data from the request body
   const { firstName, lastName, email, password } = req.body;
 
+  console.log({ firstName, lastName, email, password });
+
   //check if the user is already registered
   const userExists = await User.findOne({ email });
 
@@ -61,7 +63,7 @@ const getUsers = asyncHandler(async (req, res) => {
 
 // get user by id -> route get -> api/users/:id
 const getUserById = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id).isSelected('-password');
+  const user = await User.findById(req.params.id);
   if (user) {
     res.json(user);
   } else {

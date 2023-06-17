@@ -17,8 +17,8 @@ const protect = asyncHandler(async (req, res, next) => {
     console.log('token trace', req.headers.authorization);
 
     try {
-      token = req.headers.authorization.split('')[1];
-      const decoded = jwt.verify(token, process.env.jwt_SECRET);
+      token = req.headers.authorization.split(' ')[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       console.log('decoded token trace: ', decoded);
 
