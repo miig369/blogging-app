@@ -14,7 +14,7 @@ const articleModel = mongoose.Schema({
     required: true,
   },
   datePosted: {
-    type: Date,
+    type: String,
     required: true,
   },
   author: {

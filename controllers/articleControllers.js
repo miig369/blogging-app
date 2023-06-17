@@ -30,6 +30,7 @@ const addArticle = asyncHandler(async (req, res) => {
     title,
     content,
     imageUrl,
+    author: req.user,
     datePosted: date,
   });
 

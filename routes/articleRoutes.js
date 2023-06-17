@@ -1,5 +1,5 @@
 import express from 'express';
-import protect from '../middleware/authMiddleware';
+import protect from '../middleware/authMiddleware.js';
 import {
   getArticles,
   getArticleById,
@@ -10,12 +10,11 @@ import {
 
 const router = express.Router();
 
-router.route('/').get(getArticles);
+router.route('/').get(getArticles).post(protect, addArticle);
 
 router
   .route('/:id')
   .get(getArticleById)
-  .post(protect, addArticle)
   .put(protect, updateArticleById)
   .delete(protect, deleteArticleById);
 
