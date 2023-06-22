@@ -77,6 +77,7 @@ const deleteArticleById = asyncHandler(async (req, res) => {
 
 const getArticlesByUser = asyncHandler(async (req, res) => {
   const articles = await Article.find();
+
   if (articles) {
     res.status(200).json(articles);
   } else {
