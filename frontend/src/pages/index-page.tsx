@@ -3,12 +3,13 @@ import apiClient from '../services/api-client';
 import { useState, useEffect } from 'react';
 
 interface ArticleProps {
-    id: string | number | any,
+    _id: string | number | any,
     title: string,
     content:string,
     summary: string,
     datePosted?: string | any,
-    imageUrl: string
+    imageUrl: string,
+    firstName: string
 }
 
 const Home = () => {
@@ -31,7 +32,7 @@ const Home = () => {
             articles.length > 0 
             &&
             articles.map((article)=> (
-            <Article key={article?.id} title={article?.title} url={article?.imageUrl} date={article?.datePosted} className='article' alt='article image' link='' readMore='Read More' description={article?.summary}/>
+           <Article key={article?._id} title={article?.title} url={article?.imageUrl} author={article?.author?.firstName}date={article?.datePosted} className='article' alt='article image' _id={article?._id} readMore='Read More' description={article?.summary}/>
             ))}
         </>
     )

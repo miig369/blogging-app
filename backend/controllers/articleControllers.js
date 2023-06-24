@@ -5,7 +5,9 @@ import multer from 'multer';
 const uploadMiddleware = multer({ dest: 'uploads/' });
 
 const getArticles = asyncHandler(async (req, res) => {
-  const articles = await Article.find({}).populate('author', ['firstName']);
+  const articles = await Article.find({})
+    .populate('author', ['firstName'])
+    .sort({ createdAt: -1 });
 
   if (articles) {
     res.status(200).json(articles);
