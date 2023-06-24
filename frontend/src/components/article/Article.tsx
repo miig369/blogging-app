@@ -1,3 +1,5 @@
+import {Link} from 'react-router-dom';
+
 interface ArticleProps {
     title: string,
     url: string,
@@ -16,7 +18,7 @@ const Article = ({title, url, date, className, alt, link, readMore, description}
             <h1>{title}</h1>
             <time>{date}</time>
             <p>{description}</p>
-            <a href={link}>{readMore}</a>
+            <Link href={link}>{readMore}</Link>
         </article>
     )
 }

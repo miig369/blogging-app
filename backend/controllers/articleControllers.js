@@ -28,6 +28,7 @@ const addArticle = asyncHandler(async (req, res) => {
 
   const article = await Article.create({
     title,
+    summary,
     content,
     imageUrl,
     author: req.user,
@@ -47,6 +48,7 @@ const updateArticleById = asyncHandler(async (req, res) => {
 
   if (article) {
     article.title = req.body.title || article.title;
+    article.summary = req.body.summary || article.summary;
     article.content = req.body.content || article.content;
     article.imageUrl = req.body.imageUrl || article.imageUrl;
 
@@ -55,6 +57,7 @@ const updateArticleById = asyncHandler(async (req, res) => {
     res.json({
       _id: updatedArticle._id,
       title: updatedArticle.title,
+      summary: updatedArticle.summary,
       content: updatedArticle.content,
       imageUrl: updatedArticle.imageUrl,
     });

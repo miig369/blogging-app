@@ -7,6 +7,8 @@ import {
   getUserById,
   updateUserById,
   deleteUser,
+  profile,
+  logout,
 } from '../controllers/userController.js';
 
 const router = express.Router();
@@ -15,6 +17,8 @@ const router = express.Router();
 router.route('/').get(protect, getUsers);
 router.route('/login').post(login);
 router.route('/register').post(signUp);
+router.route('/profile').get(protect, profile);
+router.route('/logout').post(logout);
 
 router
   .route('/:id')

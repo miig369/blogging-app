@@ -42,7 +42,7 @@ const login = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user && user.matchPassword(password)) {
-    return res.json({
+    return res.cookie('token', generateToken(user.id)).json({
       _id: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
@@ -107,4 +107,26 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 });
 
-export { signUp, login, getUsers, getUserById, updateUserById, deleteUser };
+const logout = asyncHandler(async (req, res) => {
+  res.cookie('token', '').json('ok');
+});
+
+const profile = asyncHandler(async (req, res) => {
+  res.json({
+    isAuth: true,
+    id: req.user._id,
+    email: req.user.email,
+    name: req.user.firstName + req.user.lastName,
+  });
+});
+
+export {
+  signUp,
+  login,
+  getUsers,
+  getUserById,
+  updateUserById,
+  deleteUser,
+  profile,
+  logout,
+};
