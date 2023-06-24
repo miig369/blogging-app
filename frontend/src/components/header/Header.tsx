@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import {useContext, useEffect, useState} from 'react';
-import axios from 'axios';
 import { UserContext } from '../../context/user-context';
+import apiClient,{CanceledError, AxiosError} from '../../services/api-client';
 
 interface HeaderProps {
     className: string,
@@ -13,8 +13,18 @@ const Header = ({className, logo}: HeaderProps) => {
 
     const {userInfo, setUserInfo} = useContext(UserContext);
 
+    useEffect(()=>{
+        apiClient.get('/api/users/profile')
+        .then((response)=>{
+            setUserInfo(response.data)
+        })
+        .catch((error)=>{
+            console.log(error.message)
+        })
+    },[])
+
     function handleLogout(){
-        axios.post('http://localhost:9000/api/users/logout')
+        apiClient.post('/api/users/logout')
         .then((response) => {
             setUserInfo(null);
             setRedirect(true);
@@ -42,6 +52,7 @@ const Header = ({className, logo}: HeaderProps) => {
                     {user && 
                     <>
                     <li>{user}</li>
+                    <li><Link to="/create">Create new post</Link></li>
                     <li><a onClick={handleLogout}>logout</a></li>  
                     </>
                     }

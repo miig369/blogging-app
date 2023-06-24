@@ -7,8 +7,6 @@ const signUp = asyncHandler(async (req, res) => {
   // destructure data from the request body
   const { firstName, lastName, email, password } = req.body;
 
-  console.log({ firstName, lastName, email, password });
-
   //check if the user is already registered
   const userExists = await User.findOne({ email });
 
@@ -112,11 +110,14 @@ const logout = asyncHandler(async (req, res) => {
 });
 
 const profile = asyncHandler(async (req, res) => {
+  const { token } = req.cookies;
+
   res.json({
     isAuth: true,
     id: req.user._id,
     email: req.user.email,
     name: req.user.firstName + req.user.lastName,
+    token: token,
   });
 });
 

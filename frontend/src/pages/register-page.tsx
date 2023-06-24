@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import axios from 'axios';
+import apiClient,{CanceledError, AxiosError} from '../services/api-client';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -15,7 +15,7 @@ const Register = () => {
 
     function handleRegister(e){
         e.preventDefault();
-        axios.post('http://localhost:9000/api/users/register', {
+        apiClient.post('/api/users/register', {
             firstName, lastName, email, password
         }).then((response)=>{
             console.log(response.data);

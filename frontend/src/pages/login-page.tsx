@@ -1,20 +1,26 @@
 import {useContext, useState} from 'react';
-import axios from 'axios';
+import apiClient,{CanceledError, AxiosError} from '../services/api-client';
 import { Navigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {UserContext} from '../context/user-context';
 
+interface UserProps {
+    password: string;
+    email:string;
+    id?: number | any;
+  }
+
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [redirect, setRedirect] = useState(false);
-    const {userInfo,setUserInfo} = useContext(UserContext);
+    const {setUserInfo} = useContext(UserContext);
 
     function handleLogin(e){
         e.preventDefault();
 
-        axios.post('http://localhost:9000/api/users/login', {email, password})
+        apiClient.post<UserProps>('/api/users/login', {email, password})
         .then((response) =>{
             setUserInfo(response.data);
             setRedirect(true);
@@ -29,7 +35,7 @@ const Login = () => {
     if(redirect){
         return <Navigate to='/' />
     }
-    
+
     return (
         <>
        <ToastContainer />
@@ -39,7 +45,6 @@ const Login = () => {
                 <input type="email" placeholder='Enter email' name='email' value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
                 <input type="password" placeholder='Enter password' name='password' value={password} onChange={(e)=>setPassword(e.target.value)} />
                 <button>Login</button>
-           {   console.log(userInfo?.name)}
             </form>
         </div>
         </>

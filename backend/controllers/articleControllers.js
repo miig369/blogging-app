@@ -1,8 +1,11 @@
 import asyncHandler from 'express-async-handler';
 import Article from '../models/articleModel.js';
+import fs from 'fs';
+import multer from 'multer';
+const uploadMiddleware = multer({ dest: 'uploads/' });
 
 const getArticles = asyncHandler(async (req, res) => {
-  const articles = await Article.find({});
+  const articles = await Article.find({}).populate('author', ['firstName']);
 
   if (articles) {
     res.status(200).json(articles);
@@ -22,26 +25,36 @@ const getArticleById = asyncHandler(async (req, res) => {
   }
 });
 
-const addArticle = asyncHandler(async (req, res) => {
-  const { title, content, imageUrl } = req.body;
-  const date = new Date(Date.now()).toLocaleDateString();
+const addArticle = asyncHandler(
+  // uploadMiddleware.single('imageUrl'),
+  async (req, res) => {
+    const { title, summary, content, imageUrl } = req.body;
+    const date = new Date(Date.now()).toLocaleDateString();
 
-  const article = await Article.create({
-    title,
-    summary,
-    content,
-    imageUrl,
-    author: req.user,
-    datePosted: date,
-  });
+    //image upload
+    // const { originalname, path } = req.file;
+    // const parts = originalname.split('.');
+    // const ext = parts[parts.length - 1];
+    // const newPath = path + '.' + ext;
+    // fs.renameSync(path, newPath);
 
-  if (article) {
-    res.status(201).json(article);
-  } else {
-    res.status(400);
-    throw new Error('Article could not be created');
+    const article = await Article.create({
+      title,
+      summary,
+      content,
+      imageUrl,
+      author: req.user,
+      datePosted: date,
+    });
+
+    if (article) {
+      res.status(201).json(article);
+    } else {
+      res.status(400);
+      throw new Error('Article could not be created');
+    }
   }
-});
+);
 
 const updateArticleById = asyncHandler(async (req, res) => {
   const article = await Article.findById(req.params.id);
