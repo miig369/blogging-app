@@ -56,7 +56,7 @@ const EditArticle = () => {
     }
 
     if(redirect){
-        return <Navigate to={'/edit/'+id}/>
+        return <Navigate to={'/articles/'+id}/>
     }
 
     return (
