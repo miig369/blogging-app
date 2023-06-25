@@ -1,11 +1,10 @@
 interface FooterProps {
     title: string,
-    className: string
 }
 
-const Footer = ({className, title}: FooterProps) => {
+const Footer = ({title}: FooterProps) => {
     return(
-    <footer className={className}>
+    <footer>
         <p>{title}</p>
     </footer>
     )

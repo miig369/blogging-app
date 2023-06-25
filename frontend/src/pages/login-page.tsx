@@ -20,6 +20,11 @@ const Login = () => {
     function handleLogin(e){
         e.preventDefault();
 
+        if((email === "" ) || (password === "")){
+            toast('Email or Password cannot be empty')
+            return;
+        }
+
         apiClient.post<UserProps>('/api/users/login', {email, password})
         .then((response) =>{
             setUserInfo(response.data);

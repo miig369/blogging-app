@@ -21,7 +21,7 @@ const Article = ({_id, title, url, date, className, alt, readMore, description, 
             </Link>
            <span><b>{author}</b><time>{date}</time></span> 
             <p>{description}</p>
-            <Link to={`/articles/${_id}`}>{readMore}</Link>
+            <Link className='read-more' to={`/articles/${_id}`}>{readMore}</Link>
         </article>
     )
 }

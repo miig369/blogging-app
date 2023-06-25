@@ -4,12 +4,11 @@ import { UserContext } from '../../context/user-context';
 import apiClient,{CanceledError, AxiosError} from '../../services/api-client';
 
 interface HeaderProps {
-    className: string,
     logo: string
 
 }
 
-const Header = ({className, logo}: HeaderProps) => {
+const Header = ({logo}: HeaderProps) => {
 
     const {userInfo, setUserInfo} = useContext(UserContext);
 
@@ -38,8 +37,9 @@ const Header = ({className, logo}: HeaderProps) => {
 
     return (
         <header>
-            <div className={className}>
-                <Link to='/'>{logo}</Link>
+            <div className='container'>
+            <div className='header-wrapper'>
+                <Link className= 'logo' to='/'>{logo}</Link>
                 <nav>
                     <ul>
                     {
@@ -51,13 +51,13 @@ const Header = ({className, logo}: HeaderProps) => {
                     }
                     {user && 
                     <>
-                    <li>{user}</li>
+                    <li><p>{user}</p></li>
                     <li><a onClick={handleLogout}>logout</a></li>  
                     </>
                     }
                     </ul>
-                    <button>hello</button>
                 </nav>
+            </div>
             </div>
         </header>
     )

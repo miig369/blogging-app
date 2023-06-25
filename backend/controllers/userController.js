@@ -24,7 +24,7 @@ const signUp = asyncHandler(async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      token: generateToken(user.ud),
+      token: generateToken(user.id),
     });
   } else {
     res.status(400);

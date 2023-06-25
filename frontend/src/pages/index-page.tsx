@@ -3,7 +3,10 @@ import apiClient from '../services/api-client';
 import { useState, useEffect, useContext} from 'react';
 import { UserContext } from '../context/user-context';
 import { Link } from 'react-router-dom';
-
+import { IoMdAddCircle } from "react-icons/io";
+import { IconContext } from "react-icons";
+import truncate from '../helpers/truncate'
+0
 interface ArticleProps {
     _id: string | number | any,
     title: string,
@@ -34,18 +37,22 @@ const Home = () => {
     return (
         <>
         { user &&   
-        <div className='create-article-btn'>
-            <Link to="/create">Create new post</Link>
+        <div>
+            <Link className='article-btn' to="/create">
+            <IconContext.Provider value={{color: '#27D3AA', size: '24px'}}>
+                <IoMdAddCircle />Create Post</IconContext.Provider></Link>
         </div>
         }
-       
+       <section className='articles-wrapper'>
         {
             articles.length > 0 
             &&
             articles.map((article)=> (
-           <Article key={article?._id} title={article?.title} url={article?.imageUrl} author={article?.author?.firstName}date={article?.datePosted} className='article' alt='article image' _id={article?._id} readMore='Read More' description={article?.summary}/>
+           <Article key={article?._id} title={article?.title} url={article?.imageUrl} author={article?.author?.firstName}date={article?.datePosted} className='article' alt='article image' _id={article?._id} readMore='Read More' description={truncate(article?.summary, 150)}/>
             ))}
-        </>
+        </section>
+
+    </>
     )
 }
 

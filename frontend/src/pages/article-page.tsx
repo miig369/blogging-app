@@ -3,6 +3,8 @@ import apiClient from '../services/api-client';
 import { useParams } from 'react-router-dom';
 import { UserContext } from '../context/user-context';
 import { Link, Navigate } from 'react-router-dom';
+import { IoMdCreate, IoIosTrash} from "react-icons/io";
+import { IconContext } from "react-icons";
 
 interface ArticleProps {
     _id : string | number | any;
@@ -48,34 +50,30 @@ const ArticlePage = () => {
         return <Navigate to='/'/>
     }
     return (
-        <>
+        <section className='container'>
         { userInfo.id === articleInfo?.author?._id &&
-            <div className='container'>
-                <Link to={`/edit/${articleInfo._id}`}>
-                   Edit Article
+                 <div className='action-btns'>
+                <Link className='article-btn' to={`/edit/${articleInfo._id}`}>
+                <IconContext.Provider value={{color: 'red', size: '24px'}}>
+                    <IoMdCreate/>
+                   Edit Post
+                </IconContext.Provider>
                 </Link>
-                <a href='#' onClick={handleDelete}>
-                   Delete Article
+                <a href='#' className='article-btn' onClick={handleDelete}>
+                <IconContext.Provider value={{color: 'red', size: '24px'}}>
+                <IoIosTrash />
+                   Delete Post
+                </IconContext.Provider>
                 </a>
             </div>}
-            <section className='container'>
-                <h1>{articleInfo?.title}</h1>
-                <img src={articleInfo?.imageUrl} alt={articleInfo?.title}/>
-                <div dangerouslySetInnerHTML={{__html: articleInfo?.content}} />
-                <time>{articleInfo?.datePosted}</time>
+                <div className="article-view">
+                    <h1>{articleInfo?.title}</h1>
+                    <img src={articleInfo?.imageUrl} alt={articleInfo?.title}/>
+                    <div dangerouslySetInnerHTML={{__html: articleInfo?.content}} />
+                    <time>{articleInfo?.datePosted}</time>
+                </div>
             </section>
-            </>
     )
-    /*
-        "_id": "649736cbe478fdd54ccd9af8",
-        "title": "post with image",
-        "summary": "hello ",
-        "content": "<p>hello</p>",
-        "imageUrl": "https://miro.medium.com/v2/resize:fit:720/format:webp/1*IHssbtIDUCY9feEBJn4Zbg.jpeg",
-        "datePosted": "24/06/2023",
-        "author": "6494fcece1ed54e76a214310",
-        "__v": 0
-    */
 }
 
 export default ArticlePage;

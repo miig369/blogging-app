@@ -16,7 +16,12 @@ const CreateArticle = () => {
 
     function handlePost(e){
         e.preventDefault();
-        console.log('cliiiiicked')
+
+        if((title === "" ) || (summary === "") || (content === "") || (imageUrl==="")){
+            toast('All fields have to be completed')
+            return;
+        }
+        
         const newPost = {
             title: title, 
             summary: summary,
@@ -43,8 +48,9 @@ const CreateArticle = () => {
         <>
         <ToastContainer />
     <section className='container'>
-        <h1>Hello World</h1>
+       
         <form className='create-article' onSubmit={handlePost}>
+        <h1>Create Post</h1>
             <input type="text" placeholder='Enter title' name='title' value={title} onChange={e => setTitle(e.target.value)} required/>
             <input type="text" placeholder='Enter summary' name='summary' value={summary} onChange={e => setSummary(e.target.value)}  required />
             <input type="text" placeholder='Enter image url' name='imageUrl' value={imageUrl} onChange={e => setImageUrl(e.target.value)}  required />

@@ -2,7 +2,6 @@ import {useState} from 'react';
 import apiClient,{CanceledError, AxiosError} from '../services/api-client';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
@@ -12,6 +11,11 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+
+    if((email === "" ) || (password === "") || (firstName === "") || (lastName === "")){
+        toast('All field need to be completed')
+        return;
+    }
 
     function handleRegister(e){
         e.preventDefault();

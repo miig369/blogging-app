@@ -5,9 +5,9 @@ import Header from '../header/header';
 const Layout = () => {
     return(
         <main>
-        <Header className='container header-wrapper' logo='MunyaBlog'/>
+        <Header logo='DaBlog'/>
             <Outlet/>
-        <Footer className='container footer' title='Footer' />
+        <Footer title={`\u00A9 ${new Date().getFullYear()} | DaBlog. All rights reserved. `} />
       </main>
     )
 }
