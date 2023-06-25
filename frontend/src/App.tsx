@@ -7,6 +7,7 @@ import Register from './pages/register-page'
 import { UserContextProvider } from './context/user-context'
 import CreateArticle from './pages/create-article'
 import ArticlePage from './pages/article-page'
+import EditArticle from './pages/edit-article'
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/create' element={<CreateArticle />} />
         <Route path='/articles/:id' element={<ArticlePage/>} />
+        <Route path='/edit/:id' element={<EditArticle />} />
         </Route>
       </Routes>
     </UserContextProvider>

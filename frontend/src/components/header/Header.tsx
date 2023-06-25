@@ -52,7 +52,6 @@ const Header = ({className, logo}: HeaderProps) => {
                     {user && 
                     <>
                     <li>{user}</li>
-                    <li><Link to="/create">Create new post</Link></li>
                     <li><a onClick={handleLogout}>logout</a></li>  
                     </>
                     }

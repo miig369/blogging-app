@@ -1,6 +1,8 @@
 import Article from '../components/article/Article';
 import apiClient from '../services/api-client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext} from 'react';
+import { UserContext } from '../context/user-context';
+import { Link } from 'react-router-dom';
 
 interface ArticleProps {
     _id: string | number | any,
@@ -15,6 +17,7 @@ interface ArticleProps {
 const Home = () => {
 
     const [articles, setArticles] = useState<ArticleProps[]>([]);
+    const {userInfo} = useContext(UserContext)
 
     useEffect(()=>{
         apiClient.get<ArticleProps[]>('/api/articles').
@@ -26,8 +29,16 @@ const Home = () => {
             console.log(error.message)
         })
     }, [])
+
+    const user = userInfo?.firstName;
     return (
         <>
+        { user &&   
+        <div className='create-article-btn'>
+            <Link to="/create">Create new post</Link>
+        </div>
+        }
+       
         {
             articles.length > 0 
             &&
