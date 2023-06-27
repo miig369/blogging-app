@@ -1,5 +1,5 @@
 import Layout from './components/layout/Layout'
-import {Routes, Route} from 'react-router-dom'
+import {Routes, Route, Navigate} from 'react-router-dom'
 import Home from './pages/index-page'
 import Login from './pages/login-page'
 import Register from './pages/register-page'
@@ -7,6 +7,7 @@ import { UserContextProvider } from './context/user-context'
 import CreateArticle from './pages/create-article'
 import ArticlePage from './pages/article-page'
 import EditArticle from './pages/edit-article'
+import NotFound from './pages/not-found'
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
         <Route path='/create' element={<CreateArticle />} />
         <Route path='/articles/:id' element={<ArticlePage/>} />
         <Route path='/edit/:id' element={<EditArticle />} />
+        <Route path='*' element={<NotFound/>} />
         </Route>
       </Routes>
     </UserContextProvider>

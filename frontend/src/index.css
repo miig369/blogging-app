@@ -141,6 +141,7 @@ form h1{
 form input{
   padding: 0.5em;
   margin-top: 0.3em;
+  outline: none;
 }
 
 form button{

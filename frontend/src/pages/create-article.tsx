@@ -1,12 +1,15 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import {useState} from 'react';
+import {useState, useContext} from 'react';
 import apiClient,{CanceledError, AxiosError} from '../services/api-client';
 import {Navigate} from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { UserContext } from '../context/user-context';
 
 const CreateArticle = () => {
+
+    const {userInfo} = useContext(UserContext);
 
     const [title, setTitle] = useState('')
     const [summary, setSummary] = useState('')
@@ -40,6 +43,10 @@ const CreateArticle = () => {
         })
     }
 
+    if(Object.keys(userInfo).length === 0){ 
+        return (<Navigate to='/login'/>);
+    }
+
     if(redirect){
         return <Navigate to='/'/>
     }
@@ -48,7 +55,6 @@ const CreateArticle = () => {
         <>
         <ToastContainer />
     <section className='container'>
-       
         <form className='create-article' onSubmit={handlePost}>
         <h1>Create Post</h1>
             <input type="text" placeholder='Enter title' name='title' value={title} onChange={e => setTitle(e.target.value)} required/>

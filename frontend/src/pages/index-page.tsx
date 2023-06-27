@@ -18,10 +18,9 @@ interface ArticleProps {
 }
 
 const Home = () => {
-
-    const [articles, setArticles] = useState<ArticleProps[]>([]);
     const {userInfo} = useContext(UserContext)
-
+    const [articles, setArticles] = useState<ArticleProps[]>([]);
+ 
     useEffect(()=>{
         apiClient.get<ArticleProps[]>('/api/articles').
         then((response)=>{
@@ -46,10 +45,12 @@ const Home = () => {
        <section className='articles-wrapper'>
         {
             articles.length > 0 
-            &&
+            ?
             articles.map((article)=> (
            <Article key={article?._id} title={article?.title} url={article?.imageUrl} author={article?.author?.firstName}date={article?.datePosted} className='article' alt='article image' _id={article?._id} readMore='Read More' description={truncate(article?.summary, 150)}/>
-            ))}
+            )) :
+            <h2 style={{marginTop: '100px'}}>No Blogs Available, Please login to Create a blog</h2>
+        }
         </section>
 
     </>
