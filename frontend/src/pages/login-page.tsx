@@ -12,10 +12,10 @@ interface UserProps {
   }
 
 const Login = () => {
+    const {setUserInfo} = useContext(UserContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [redirect, setRedirect] = useState(false);
-    const {setUserInfo} = useContext(UserContext);
 
     function handleLogin(e){
         e.preventDefault();
@@ -28,6 +28,7 @@ const Login = () => {
         apiClient.post<UserProps>('/api/users/login', {email, password})
         .then((response) =>{
             setUserInfo(response.data);
+            localStorage.setItem('token', response.data.token);
             setRedirect(true);
         })
         .catch((error)=>{

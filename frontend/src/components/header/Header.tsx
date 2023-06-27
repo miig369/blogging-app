@@ -1,5 +1,5 @@
-import {Link} from 'react-router-dom';
-import {useContext, useEffect, useState} from 'react';
+import {Link, Navigate} from 'react-router-dom';
+import {useContext, useEffect} from 'react';
 import { UserContext } from '../../context/user-context';
 import apiClient,{CanceledError, AxiosError} from '../../services/api-client';
 
@@ -26,13 +26,17 @@ const Header = ({logo}: HeaderProps) => {
         apiClient.post('/api/users/logout')
         .then((response) => {
             setUserInfo(null);
-            setRedirect(true);
+            localStorage.removeItem('token');
+            <Navigate to='/login' />
     })
         .catch((error)=>{
             console.log(error.message)
         })
     }
 
+
+ 
+    
     const user = userInfo?.firstName;
 
     return (

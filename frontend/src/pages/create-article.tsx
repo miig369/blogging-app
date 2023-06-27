@@ -43,7 +43,7 @@ const CreateArticle = () => {
         })
     }
 
-    if(Object.keys(userInfo).length === 0){ 
+    if(Object.keys(userInfo)?.length === 0){ 
         return (<Navigate to='/login'/>);
     }
 
