@@ -44,7 +44,7 @@ const Home = () => {
         }
        <section className='articles-wrapper'>
         {
-            articles.length > 0 
+            articles?.length > 0 
             ?
             articles.map((article)=> (
            <Article key={article?._id} title={article?.title} url={article?.imageUrl} author={article?.author?.firstName}date={article?.datePosted} className='article' alt='article image' _id={article?._id} readMore='Read More' description={truncate(article?.summary, 150)}/>
