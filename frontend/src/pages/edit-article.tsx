@@ -23,7 +23,10 @@ const EditArticle = () => {
     const [redirect, setRedirect] =useState(false)
 
     useEffect(()=>{
-        apiClient.get<ArticlePros>('/api/articles/'+id)
+               //effect cleanup
+    const controller = new AbortController();
+        
+        apiClient.get<ArticlePros>('/api/articles/'+id, {signal: controller.signal})
         .then((response)=>{
             setTitle(response.data.title)
             setSummary(response.data.summary)
@@ -32,6 +35,7 @@ const EditArticle = () => {
         }).catch((error)=>{
             console.log(error.message)
         })
+        return () => controller.abort();
     },[])
 
     function handleUpdatePost(e){

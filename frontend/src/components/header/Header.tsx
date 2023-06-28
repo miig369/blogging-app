@@ -13,13 +13,17 @@ const Header = ({logo}: HeaderProps) => {
     const {userInfo, setUserInfo} = useContext(UserContext);
 
     useEffect(()=>{
-        apiClient.get('/api/users/profile')
+                        //effect cleanup
+    const controller = new AbortController();
+  
+        apiClient.get('/api/users/profile', {signal: controller.signal})
         .then((response)=>{
             setUserInfo(response.data)
         })
         .catch((error)=>{
             console.log(error.message)
         })
+        return () => controller.abort();
     },[])
 
     function handleLogout(){

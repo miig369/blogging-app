@@ -22,7 +22,10 @@ const Home = () => {
     const [articles, setArticles] = useState<ArticleProps[]>([]);
  
     useEffect(()=>{
-        apiClient.get<ArticleProps[]>('/api/articles').
+
+               //effect cleanup
+    const controller = new AbortController();
+        apiClient.get<ArticleProps[]>('/api/articles', {signal: controller.signal}).
         then((response)=>{
             console.log(response.data)
             setArticles(response.data)
@@ -30,6 +33,7 @@ const Home = () => {
         .catch((error)=>{
             console.log(error.message)
         })
+        return () => controller.abort();
     }, [])
 
     const user = userInfo?.firstName;

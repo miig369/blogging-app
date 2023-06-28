@@ -23,6 +23,9 @@ const ArticlePage = () => {
     const [redirect, setRedirect] = useState(false);
     useEffect(()=>{
         
+         //effect cleanup
+    const controller = new AbortController();
+
         apiClient.get('/api/articles/'+id)
         .then((response)=>{
             setArticleInfo(response.data);
@@ -30,6 +33,8 @@ const ArticlePage = () => {
         .catch((error)=>{
             console.log(error.message)
         })
+
+    return () => controller.abort();
     }, [])
 
     function handleDelete(){
@@ -49,23 +54,25 @@ const ArticlePage = () => {
     if(redirect){
         return <Navigate to='/'/>
     }
+    console.log(userInfo._id)
     return (
         <section className='container'>
-        { userInfo.id === articleInfo?.author?._id &&
-                 <div className='action-btns'>
-                <Link className='article-btn' to={`/edit/${articleInfo._id}`}>
-                <IconContext.Provider value={{color: 'red', size: '24px'}}>
-                    <IoMdCreate/>
-                   Edit Post
-                </IconContext.Provider>
-                </Link>
-                <a href='#' className='article-btn' onClick={handleDelete}>
-                <IconContext.Provider value={{color: 'red', size: '24px'}}>
-                <IoIosTrash />
-                   Delete Post
-                </IconContext.Provider>
-                </a>
-            </div>}
+        {  userInfo._id === articleInfo.author._id &&
+                  <div className='action-btns'>
+                  <Link className='article-btn' to={`/edit/${articleInfo._id}`}>
+                  <IconContext.Provider value={{color: 'red', size: '24px'}}>
+                      <IoMdCreate/>
+                     Edit Post
+                  </IconContext.Provider>
+                  </Link>
+                  <a href='#' className='article-btn' onClick={handleDelete}>
+                  <IconContext.Provider value={{color: 'red', size: '24px'}}>
+                  <IoIosTrash />
+                     Delete Post
+                  </IconContext.Provider>
+                  </a>
+              </div>
+        }
                 <div className="article-view">
                     <h1>{articleInfo?.title}</h1>
                     <img src={articleInfo?.imageUrl} alt={articleInfo?.title}/>
