@@ -61,6 +61,11 @@ nav ul li{
   list-style: none;
 }
 
+.articles-wrapper{
+  display: flex;
+  flex-direction: column;
+}
+
 article{
   margin: 0.9rem 0;
 }
@@ -198,13 +203,14 @@ footer p{
   }
 
   .articles-wrapper{
-    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: start;
     gap: 1em;
   }
 
   .article{
-    width: 50%;
+    width: 45%;
   }
 
   .article img {
@@ -225,12 +231,8 @@ footer p{
     max-width: 1100px;
   }
 
-  .articles-wrapper{
-    display: flex;
-  }
-
   .article{
-    width: 33%;
+    width: 30%;
   }
 
   .article img {

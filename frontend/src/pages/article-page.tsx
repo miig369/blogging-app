@@ -53,12 +53,14 @@ const ArticlePage = () => {
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Cookie", `token=${localStorage.getItem('token')}`);
 
-        const raw = JSON.stringify({
-        "title": articleInfo.title,
-        "content": articleInfo.content,
-        "summary": articleInfo.summary,
-        "imageUrl": articleInfo.imageUrl
-        });
+        const newData = {
+            "title": articleInfo.title,
+            "content": articleInfo.content,
+            "summary": articleInfo.summary,
+            "imageUrl": articleInfo.imageUrl
+            };
+
+        const raw = JSON.stringify(newData);
 
         const requestOptions = {
         method: 'DELETE',
@@ -67,10 +69,10 @@ const ArticlePage = () => {
         redirect: 'follow'
         };
 
-        fetch("http://localhost:9000/api/"+id, requestOptions)
+        fetch("http://localhost:9000/api/articles/"+id, requestOptions)
         .then((response) =>{
              response.text() 
-             setRedirect(true);
+             setRedirect(true)
             })
         .then(result => console.log(result))
         .catch(error => console.log('error', error));

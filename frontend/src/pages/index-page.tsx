@@ -38,7 +38,7 @@ const Home = () => {
 
     const user = userInfo?.firstName;
     return (
-        <>
+        <section className='container'>
         { user &&   
         <div>
             <Link className='article-btn' to="/create">
@@ -57,7 +57,7 @@ const Home = () => {
         }
         </section>
 
-    </>
+    </section>
     )
 }
 
