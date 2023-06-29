@@ -5,6 +5,7 @@ import { UserContext } from '../context/user-context';
 import { Link, Navigate } from 'react-router-dom';
 import { IoMdCreate, IoIosTrash} from "react-icons/io";
 import { IconContext } from "react-icons";
+import { toast } from 'react-toastify';
 
 interface ArticleProps {
     _id : string | number | any;
@@ -38,13 +39,41 @@ const ArticlePage = () => {
     }, [])
 
     function handleDelete(){
-        apiClient.delete('/api/articles/'+id)
-        .then((response)=>{
-            setRedirect(true)
-        })
-        .catch((error)=>{
-            console.log(error.message)
-        })
+
+        // apiClient.delete('/api/articles/'+id)
+        // .then((response)=>{
+        //     setRedirect(true)
+        // })
+        // .catch((error)=>{
+        //     console.log(error.message)
+        // })
+
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Cookie", `token=${localStorage.getItem('token')}`);
+
+        const raw = JSON.stringify({
+        "title": articleInfo.title,
+        "content": articleInfo.content,
+        "summary": articleInfo.summary,
+        "imageUrl": articleInfo.imageUrl
+        });
+
+        const requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+        };
+
+        fetch("http://localhost:9000/api/"+id, requestOptions)
+        .then((response) =>{
+             response.text() 
+             setRedirect(true);
+            })
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
     }
 
     if (!articleInfo){
@@ -54,10 +83,10 @@ const ArticlePage = () => {
     if(redirect){
         return <Navigate to='/'/>
     }
-    console.log(userInfo._id)
+
     return (
         <section className='container'>
-        {  userInfo._id === articleInfo.author._id &&
+        {  userInfo._id === articleInfo.author &&
                   <div className='action-btns'>
                   <Link className='article-btn' to={`/edit/${articleInfo._id}`}>
                   <IconContext.Provider value={{color: 'red', size: '24px'}}>

@@ -35,6 +35,7 @@ const EditArticle = () => {
         }).catch((error)=>{
             console.log(error.message)
         })
+
         return () => controller.abort();
     },[])
 
@@ -54,14 +55,36 @@ const EditArticle = () => {
             content: content
         }
 
-        apiClient.put('/api/articles/'+id, newPost)
-        .then((response)=>{
+        // apiClient.put('/api/articles/'+id, newPost)
+        // .then((response)=>{
+        //     setRedirect(true)
+        // })
+        // .catch((error)=>{
+        //     console.log(error.message)
+        //     toast("Something went wrong, please try again");
+        // })
+
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Cookie", `token=${localStorage.getItem('token')}`);
+
+        const raw = JSON.stringify(newPost);
+        
+        const requestOptions = {
+          method: 'PUT',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+        
+        fetch("http://localhost:9000/api/articles/"+id, requestOptions)
+          .then(response => response.text())
+          .then((result) => {
+            console.log(result)
             setRedirect(true)
-        })
-        .catch((error)=>{
-            console.log(error.message)
-            toast("Something went wrong, please try again");
-        })
+          })
+          .catch(error => console.log('error', error));
     }
 
     if(redirect){
